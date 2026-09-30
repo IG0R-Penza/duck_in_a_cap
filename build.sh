@@ -1,0 +1,5 @@
+g++ -c main.cpp -o main.o
+g++ -c renderer.cpp -o renderer.o
+g++ -c matrix.cpp -o matrix.o
+g++ -c ui.cpp -o ui.o
+g++ main.o renderer.o matrix.o ui.o -o duck
