@@ -43,11 +43,15 @@ void UI::runUI(){
                 case '7':
                     switch (mode){
                         case 0:
-                            renderer.move(-2, 0);
+                            renderer.move(-2, 0, 0);
+                            renderer.draw();
+                            break;
+                        case 1:
+                            renderer.rotateX(-5*M_PI/180.0);
                             renderer.draw();
                             break;
                         case 2:
-                            renderer.changeScale(-2, 0);
+                            renderer.changeScale(-2, 0, 0);
                             renderer.draw();
                             break;
                         default:
@@ -57,11 +61,15 @@ void UI::runUI(){
                 case '9':
                     switch (mode){
                         case 0:
-                            renderer.move(2, 0);
+                            renderer.move(2, 0, 0);
+                            renderer.draw();
+                            break;
+                        case 1:
+                            renderer.rotateX(5*M_PI/180.0);
                             renderer.draw();
                             break;
                         case 2:
-                            renderer.changeScale(2, 0);
+                            renderer.changeScale(2, 0, 0);
                             renderer.draw();
                             break;
                         default:
@@ -71,11 +79,15 @@ void UI::runUI(){
                 case '4':
                     switch (mode){
                         case 0:
-                            renderer.move(0, -2);
+                            renderer.move(0, -2, 0);
+                            renderer.draw();
+                            break;
+                        case 1:
+                            renderer.rotateY(-5*M_PI/180.0);
                             renderer.draw();
                             break;
                         case 2:
-                            renderer.changeScale(0, -2);
+                            renderer.changeScale(0, -2, 0);
                             renderer.draw();
                             break;
                         default:
@@ -85,11 +97,15 @@ void UI::runUI(){
                 case '6':
                     switch (mode){
                         case 0:
-                            renderer.move(0, 1);
+                            renderer.move(0, 2, 0);
+                            renderer.draw();
+                            break;
+                        case 1:
+                            renderer.rotateY(5*M_PI/180.0);
                             renderer.draw();
                             break;
                         case 2:
-                            renderer.changeScale(0, 2);
+                            renderer.changeScale(0, 2, 0);
                             renderer.draw();
                             break;
                         default:
@@ -98,8 +114,16 @@ void UI::runUI(){
                     break;
                 case '1':
                     switch (mode){
+                        case 0:
+                            renderer.move(0, 0, -2);
+                            renderer.draw();
+                            break;
                         case 1:
-                            renderer.rotate(-5*M_PI/180.0);
+                            renderer.rotateZ(-5*M_PI/180.0);
+                            renderer.draw();
+                            break;
+                        case 2:
+                            renderer.changeScale(0, 0, -2);
                             renderer.draw();
                             break;
                         default:
@@ -108,8 +132,16 @@ void UI::runUI(){
                     break;
                 case '3':
                     switch (mode){
+                        case 0:
+                            renderer.move(0, 0, 2);
+                            renderer.draw();
+                            break;
                         case 1:
-                            renderer.rotate(5*M_PI/180.0);
+                            renderer.rotateZ(5*M_PI/180.0);
+                            renderer.draw();
+                            break;
+                        case 2:
+                            renderer.changeScale(0, 0, 2);
                             renderer.draw();
                             break;
                         default:
@@ -117,11 +149,11 @@ void UI::runUI(){
                     }
                     break;
                 case '-':
-                    renderer.changeScale(-2, -2);
+                    renderer.changeScale(-2, -2, -2);
                     renderer.draw();
                     break;
                 case '+':
-                    renderer.changeScale(2, 2);
+                    renderer.changeScale(2, 2, 2);
                     renderer.draw();
                     break;
                 case '`':

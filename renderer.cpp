@@ -5,37 +5,66 @@
 #include <linux/kd.h>
 
 Renderer::Renderer(){
-    this->initial = Matrix(28, 3, std::vector<double>({
-        -6, 11, 1,
-        -1, 11, 1,
-        -10, 9, 1,
-        -7, 9, 1,
-        -1, 9, 1,
-        -4, 8, 1,
-        -2, 8, 1,
-        -11, 7, 1,
-        -7, 7, 1,
-        -4, 6, 1,
-        -2, 6, 1,
-        -11, 5, 1,
-        -7, 5, 1,
-        -7, 4, 1,
-        -6, 4, 1,
-        -1, 4, 1,
-        11, 3, 1,
-        -8, 0, 1,
-        -2, 0, 1,
-        6, 0, 1,
-        11, 0, 1,
-        -2, -6, 1,
-        -5, -8, 1,
-        0, -8, 1,
-        5, -8, 1,
-        -3, -11, 1,
-        0, -11, 1,
-        1, -11, 1
+    this->initial = Matrix(55, 4, std::vector<double>({
+        -6, 11, 2, 1,
+        -1, 11, 2, 1,
+        -10, 9, 2, 1,
+        -7, 9, 2, 1,
+        -1, 9, 2, 1,
+        -4, 8, 2, 1,
+        -2, 8, 2, 1,
+        -11, 7, 2, 1,
+        -7, 7, 2, 1,
+        -4, 6, 2, 1,
+        -2, 6, 2, 1,
+        -11, 5, 2, 1,
+        -7, 5, 2, 1,
+        -7, 4, 2, 1,
+        -6, 4, 2, 1,
+        -1, 4, 2, 1,
+        11, 3, 0, 1,
+        -8, 0, 4, 1,
+        -2, 0, 4, 1,
+        6, 0, 4, 1,
+        11, 0, 4, 1,
+        -2, -6, 4, 1,
+        -5, -8, 4, 1,
+        0, -8, 4, 1,
+        5, -8, 4, 1,
+        -3, -11, 4, 1,
+        0, -11, 4, 1,
+        1, -11, 4, 1,
+
+        -6, 11, -2, 1,
+        -1, 11, -2, 1,
+        -10, 9, -2, 1,
+        -7, 9, -2, 1,
+        -1, 9, -2, 1,
+        -4, 8, -2, 1,
+        -2, 8, -2, 1,
+        -11, 7, -2, 1,
+        -7, 7, -2, 1,
+        -4, 6, -2, 1,
+        -2, 6, -2, 1,
+        -11, 5, -2, 1,
+        -7, 5, -2, 1,
+        -7, 4, -2, 1,
+        -6, 4, -2, 1,
+        -1, 4, -2, 1,
+
+        -8, 0, -4, 1,
+        -2, 0, -4, 1,
+        6, 0, -4, 1,
+        11, 0, -4, 1,
+        -2, -6, -4, 1,
+        -5, -8, -4, 1,
+        0, -8, -4, 1,
+        5, -8, -4, 1,
+        -3, -11, -4, 1,
+        0, -11, -4, 1,
+        1, -11, -4, 1,
     }));
-    this->lines = Matrix(31, 2, std::vector<double>({
+    this->lines = Matrix(84, 2, std::vector<double>({
         0, 1,
         2, 3,
         3, 4,
@@ -66,14 +95,73 @@ Renderer::Renderer(){
         22, 17,
         23, 26,
         26, 25,
-        26, 27
+        26, 27,
+
+        28, 29,
+        30, 31,
+        31, 32,
+        28, 31,
+        29, 32,
+        31, 36,
+        36, 40,
+        40, 41,
+        41, 42,
+        32, 43,
+        35, 36,
+        39, 40,
+        35, 39,
+        33, 34,
+        34, 38,
+        38, 37,
+        37, 33,
+        42, 44,
+        43, 45,
+        45, 46,
+        45, 48,
+        48, 46,
+        46, 16,
+        16, 47,
+        47, 51,
+        51, 50,
+        50, 49,
+        49, 44,
+        50, 53,
+        53, 52,
+        53, 54,
+
+        0, 28,
+        1, 29,
+        2, 30,
+        3, 31,
+        4, 32,
+        7, 35,
+        8, 36,
+        11, 39,
+        12, 40,
+        13, 41,
+        14, 42,
+        15, 43,
+        17, 44,
+        18, 45,
+        19, 46,
+        20, 47,
+        22, 49,
+        23, 50,
+        24, 51,
+        25, 52,
+        26, 53,
+        27, 54
     }));
     this->current = this->initial;
     this->x_scale = 1;
     this->y_scale = 1;
+    this->z_scale = 1;
     this->xOffset = 0;
     this->yOffset = 0;
+    this->zOffset = 0;
     this->xyTurn = 0;
+    this->xzTurn = 0;
+    this->yzTurn = 0;
 
     console_fd = ::open("/dev/tty3", O_RDWR);////??????
     ::ioctl(console_fd, KDSETMODE, KD_GRAPHICS);
@@ -105,26 +193,45 @@ Renderer::~Renderer() {
 }
 
 void Renderer::draw() {
-    Matrix rotation = Matrix(3, 3, std::vector<double>({
-        cos(xyTurn), sin(xyTurn), 0,
-        -sin(xyTurn), cos(xyTurn), 0,
-        0, 0, 1
+    Matrix rotationX = Matrix(4, 4, std::vector<double>({
+        1, 0, 0, 0,
+        0, cos(yzTurn), sin(yzTurn), 0,
+        0, -sin(yzTurn), cos(yzTurn), 0,
+        0, 0, 0, 1
     }));
 
-    Matrix scale = Matrix(3, 3, std::vector<double>({
-        x_scale, 0, 0,
-        0, y_scale, 0,
-        0, 0, 1
+    Matrix rotationY = Matrix(4, 4, std::vector<double>({
+        cos(xzTurn), 0, -sin(xzTurn), 0,
+        0, 1, 0, 0,
+        sin(xzTurn), 0, cos(xzTurn), 0,
+        0, 0, 0, 1
     }));
 
-    Matrix move = Matrix(3, 3, std::vector<double>({
-        1, 0, (double)xOffset,
-        0, 1, (double)yOffset,
-        0, 0, 1
+    Matrix rotationZ = Matrix(4, 4, std::vector<double>({
+        cos(xyTurn), sin(xyTurn), 0, 0,
+        -sin(xyTurn), cos(xyTurn), 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
+    }));
+
+    Matrix scale = Matrix(4, 4, std::vector<double>({
+        x_scale, 0, 0, 0,
+        0, y_scale, 0, 0,
+        0, 0, z_scale, 0,
+        0, 0, 0, 1
+    }));
+
+    Matrix move = Matrix(4, 4, std::vector<double>({
+        1, 0, 0, (double)xOffset,
+        0, 1, 0, (double)yOffset,
+        0, 0, 1, (double)zOffset,
+        0, 0, 0, 1
     }));
 
     current = initial*scale;
-    current = current*rotation;
+    current = current*rotationX;
+    current = current*rotationY;
+    current = current*rotationZ;
     current = current*move;
 
     try {
@@ -162,19 +269,29 @@ void Renderer::draw() {
     catch (...){ ::ioctl(console_fd, KDSETMODE, KD_TEXT);}
 }
 
-void Renderer::changeScale(double x_scale, double y_scale) {
-    if (this->x_scale+x_scale <= 0 || this->y_scale+y_scale <= 0) return;
+void Renderer::changeScale(double x_scale, double y_scale, double z_scale) {
+    if (this->x_scale+x_scale <= 0 || this->y_scale+y_scale <= 0 || this->z_scale+z_scale <= 0) return;
 
     this->x_scale += x_scale;
     this->y_scale += y_scale;
+    this->z_scale += z_scale;
 }
 
-void Renderer::move(int x, int y){
+void Renderer::move(int x, int y, int z){
     xOffset += x;
     yOffset += y;
+    zOffset += z;
 }
 
-void Renderer::rotate(double radians) {
+void Renderer::rotateX(double radians) {
+    this->yzTurn += radians;
+}
+
+void Renderer::rotateY(double radians) {
+    this->xzTurn += radians;
+}
+
+void Renderer::rotateZ(double radians) {
     this->xyTurn += radians;
 }
 
@@ -182,7 +299,11 @@ void Renderer::restore() {
     this->current = this->initial;
     this->x_scale = 1;
     this->y_scale = 1;
+    this->z_scale = 1;
     this->xOffset = 0;
     this->yOffset = 0;
+    this->zOffset = 0;
     this->xyTurn = 0;
+    this->xzTurn = 0;
+    this->yzTurn = 0;
 }

@@ -17,9 +17,13 @@ private:
     Matrix lines;
     int xOffset = 0;
     int yOffset = 0;
+    int zOffset = 0;
     double xyTurn = 0;
+    double xzTurn = 0;
+    double yzTurn = 0;
     double x_scale = 1;
     double y_scale = 1;
+    double z_scale = 1;
 
     int descriptor = -1;
     uint32_t *fb = nullptr;
@@ -37,8 +41,10 @@ public:
     ~Renderer();
     void draw();
     void erase();
-    void rotate(double radians);
-    void changeScale(double x_scale, double y_scale);
-    void move(int x, int y);
+    void rotateX(double radians);
+    void rotateY(double radians);
+    void rotateZ(double radians);
+    void changeScale(double x_scale, double y_scale, double z_scale);
+    void move(int x, int y, int z);
     void restore();
 };
