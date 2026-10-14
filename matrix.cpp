@@ -22,7 +22,7 @@ Matrix Matrix::operator*(const Matrix& other) const{
     Matrix res = Matrix(m, n, std::vector<double>(m * n, 0));
     for (int i1 = 0; i1 < m; i1++){
         for (int i2 = 0; i2 < other.m; i2++){
-            int sum = 0;
+            double sum = 0;
             res.set(i1, i2, 0);
             for (int j = 0; j < n; j++){
                 sum += get(i1, j)*other.get(i2, j);
@@ -35,3 +35,15 @@ Matrix Matrix::operator*(const Matrix& other) const{
 
 int Matrix::getLines() {return m;}
 int Matrix::getColumns() {return n;}
+
+void Matrix::normalize() {
+    for (int i = 0; i < m; i++){
+        for (int j = 0; j < n; j++){
+            if (get(i, n-1)<=1e-6 || get(i, n-1)!=get(i, n-1)){
+                set(i, n-1, 0.0);
+                continue;
+            }
+            set(i, j, get(i, j)/get(i, n-1));
+        }
+    }
+}

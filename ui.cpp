@@ -160,6 +160,10 @@ void UI::runUI(){
                     renderer.restore();
                     renderer.draw();
                     break;
+                case 'p':
+                    renderer.toggleProection();
+                    renderer.draw();
+                    break;
                 case 'q':
                     tcsetattr(STDIN_FILENO, TCSANOW, &origTerm);
                     return;

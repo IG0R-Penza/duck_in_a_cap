@@ -24,6 +24,7 @@ private:
     double x_scale = 1;
     double y_scale = 1;
     double z_scale = 1;
+    bool proection = false;
 
     int descriptor = -1;
     uint32_t *fb = nullptr;
@@ -47,4 +48,5 @@ public:
     void changeScale(double x_scale, double y_scale, double z_scale);
     void move(int x, int y, int z);
     void restore();
+    void toggleProection();
 };

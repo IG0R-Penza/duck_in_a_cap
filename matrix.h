@@ -14,4 +14,5 @@ public:
     double get(int i, int j) const;
     int getLines();
     int getColumns();
+    void normalize();
 };

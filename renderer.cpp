@@ -167,6 +167,7 @@ Renderer::Renderer(){
     this->xyTurn = 0;
     this->xzTurn = 0;
     this->yzTurn = 0;
+    this->proection = false;
 
     console_fd = ::open("/dev/tty3", O_RDWR);////??????
     ::ioctl(console_fd, KDSETMODE, KD_GRAPHICS);
@@ -233,15 +234,29 @@ void Renderer::draw() {
         0, 0, 0, 1
     }));
 
+    Matrix perspective = Matrix(4, 4, std::vector<double>({
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 0, 0,
+        0, 0, 0.1, 1
+    }));
+
     current = initial*scale;
     current = current*rotationX;
     current = current*rotationY;
     current = current*rotationZ;
     current = current*move;
+    if (proection) {
+        current = current*perspective;
+        current.normalize();
+    }
 
     try {
         ::memset(fb, 0, fb_size);
         for (int line = 0; line < lines.getLines(); line++){
+            if (current.get(lines.get(line, 0), 3) == 0.0 || current.get(lines.get(line, 1), 3) == 0.0){
+                continue;
+            }
             
             int x1 = width/2+round(current.get(lines.get(line, 0), 0));
             int y1 = height/2-round(current.get(lines.get(line, 0), 1));
@@ -311,4 +326,9 @@ void Renderer::restore() {
     this->xyTurn = 0;
     this->xzTurn = 0;
     this->yzTurn = 0;
+    this->proection = false;
+}
+
+void Renderer::toggleProection() {
+    proection = !proection;
 }
