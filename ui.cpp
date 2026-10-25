@@ -24,7 +24,9 @@ int UI::_kbhit() {
 
 void UI::runUI(){
     int mode = 0;//0 - move, 1 - rotate, 2 - scale
+    bool drawerEnabled = false;
     Renderer renderer = Renderer();
+    Drawer drawer = Drawer();
     renderer.draw();
     while (true){
         if (_kbhit()){
@@ -44,15 +46,21 @@ void UI::runUI(){
                     switch (mode){
                         case 0:
                             renderer.move(-2, 0, 0);
-                            renderer.draw();
+                            drawer.move(-2, 0, 0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         case 1:
                             renderer.rotateX(-5*M_PI/180.0);
-                            renderer.draw();
+                            drawer.rotateX(-5*M_PI/180.0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         case 2:
                             renderer.changeScale(-2, 0, 0);
-                            renderer.draw();
+                            drawer.changeScale(-2, 0, 0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         default:
                             break;
@@ -62,15 +70,21 @@ void UI::runUI(){
                     switch (mode){
                         case 0:
                             renderer.move(2, 0, 0);
-                            renderer.draw();
+                            drawer.move(2, 0, 0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         case 1:
                             renderer.rotateX(5*M_PI/180.0);
-                            renderer.draw();
+                            drawer.rotateX(5*M_PI/180.0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         case 2:
                             renderer.changeScale(2, 0, 0);
-                            renderer.draw();
+                            drawer.changeScale(2, 0, 0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         default:
                             break;
@@ -80,15 +94,21 @@ void UI::runUI(){
                     switch (mode){
                         case 0:
                             renderer.move(0, -2, 0);
-                            renderer.draw();
+                            drawer.move(0, -2, 0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         case 1:
                             renderer.rotateY(-5*M_PI/180.0);
-                            renderer.draw();
+                            drawer.rotateY(-5*M_PI/180.0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         case 2:
                             renderer.changeScale(0, -2, 0);
-                            renderer.draw();
+                            drawer.changeScale(0, -2, 0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         default:
                             break;
@@ -98,15 +118,21 @@ void UI::runUI(){
                     switch (mode){
                         case 0:
                             renderer.move(0, 2, 0);
-                            renderer.draw();
+                            drawer.move(0, 2, 0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         case 1:
                             renderer.rotateY(5*M_PI/180.0);
-                            renderer.draw();
+                            drawer.rotateY(5*M_PI/180.0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         case 2:
                             renderer.changeScale(0, 2, 0);
-                            renderer.draw();
+                            drawer.changeScale(0, 2, 0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         default:
                             break;
@@ -116,15 +142,21 @@ void UI::runUI(){
                     switch (mode){
                         case 0:
                             renderer.move(0, 0, -2);
-                            renderer.draw();
+                            drawer.move(0, 0, -2);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         case 1:
                             renderer.rotateZ(-5*M_PI/180.0);
-                            renderer.draw();
+                            drawer.rotateZ(-5*M_PI/180.0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         case 2:
                             renderer.changeScale(0, 0, -2);
-                            renderer.draw();
+                            drawer.changeScale(0, 0, -2);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         default:
                             break;
@@ -134,15 +166,21 @@ void UI::runUI(){
                     switch (mode){
                         case 0:
                             renderer.move(0, 0, 2);
-                            renderer.draw();
+                            drawer.move(0, 0, 2);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         case 1:
                             renderer.rotateZ(5*M_PI/180.0);
-                            renderer.draw();
+                            drawer.rotateZ(5*M_PI/180.0);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         case 2:
                             renderer.changeScale(0, 0, 2);
-                            renderer.draw();
+                            drawer.changeScale(0, 0, 2);
+                            if (!drawerEnabled) renderer.draw();
+                            else drawer.draw();
                             break;
                         default:
                             break;
@@ -150,19 +188,30 @@ void UI::runUI(){
                     break;
                 case '-':
                     renderer.changeScale(-2, -2, -2);
-                    renderer.draw();
+                    drawer.changeScale(-2, -2, -2);
+                    if (!drawerEnabled) renderer.draw();
+                    else drawer.draw();
                     break;
                 case '+':
                     renderer.changeScale(2, 2, 2);
-                    renderer.draw();
+                    drawer.changeScale(2, 2, 2);
+                    if (!drawerEnabled) renderer.draw();
+                    else drawer.draw();
                     break;
                 case '`':
                     renderer.restore();
-                    renderer.draw();
+                    drawer.restore();
+                    if (!drawerEnabled) renderer.draw();
+                    else drawer.draw();
                     break;
                 case 'p':
                     renderer.toggleProection();
-                    renderer.draw();
+                    if (!drawerEnabled) renderer.draw();
+                    break;
+                case 'f':
+                    drawerEnabled = !drawerEnabled;
+                    if (!drawerEnabled) renderer.draw();
+                    else drawer.draw();
                     break;
                 case 'q':
                     tcsetattr(STDIN_FILENO, TCSANOW, &origTerm);

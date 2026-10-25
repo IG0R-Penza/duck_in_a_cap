@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #include "renderer.h"
+#include "drawer.h"
 
 class UI {
 private:
