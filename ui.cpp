@@ -22,6 +22,11 @@ int UI::_kbhit() {
     return bytesWaiting;
 }
 
+void UI::krya()
+{
+    std::system("aplay krya.wav 2>/dev/null &");
+}
+
 void UI::runUI(){
     int mode = 0;//0 - move, 1 - rotate, 2 - scale
     bool drawerEnabled = false;
@@ -209,9 +214,13 @@ void UI::runUI(){
                     if (!drawerEnabled) renderer.draw();
                     break;
                 case 'f':
+                    krya();
                     drawerEnabled = !drawerEnabled;
                     if (!drawerEnabled) renderer.draw();
                     else drawer.draw();
+                    break;
+                case 'h':
+                    krya();
                     break;
                 case 'q':
                     tcsetattr(STDIN_FILENO, TCSANOW, &origTerm);

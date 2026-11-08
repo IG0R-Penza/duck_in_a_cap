@@ -38,6 +38,7 @@ private:
     int console_fd;
 
     bool putPixel(int x, int y, int color);
+    std::vector<Triangle> refine(std::vector<Triangle> model, double maxEdge);
 public:
     Drawer();
     ~Drawer();

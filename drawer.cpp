@@ -15,9 +15,28 @@ bool Drawer::putPixel(int x, int y, int color){
     return false;
 }
 
+std::vector<Triangle> Drawer::refine(std::vector<Triangle> model, double maxEdge)
+{
+    bool changed = true;
+    while (changed) {
+        changed = false;
+        std::vector<Triangle> next;
+        for (auto& triangle : model) {
+            if (triangle.getLongestLen() > maxEdge) {
+                auto [a, b] = triangle.split();
+                next.push_back(a);
+                next.push_back(b);
+                changed = true;
+            } else next.push_back(triangle);
+        }
+        model = std::move(next);
+    }
+    return model;
+}
+
 Drawer::Drawer()
 {
-    triangles = std::vector<Triangle>({
+    triangles = refine(std::vector<Triangle>({
         //kepka
         //kozyirek
         Triangle(std::vector<double>({
@@ -147,299 +166,299 @@ Drawer::Drawer()
             -7, 7, 2, 1,
             -7, 7, -2, 1,
             -7, 9, 2, 1
-        }), 0x00FFFF00),
+        }), 0x001C4A34),
         Triangle(std::vector<double>({
             -7, 9, 2, 1,
             -7, 9, -2, 1,
             -7, 7, -2, 1
-        }), 0x00FFFF00),
+        }), 0x001C4A34),
         Triangle(std::vector<double>({
             -7, 4, 2, 1,
             -7, 4, -2, 1,
             -7, 5, 2, 1
-        }), 0x00FFFF00),
+        }), 0x001C4A34),
         Triangle(std::vector<double>({
             -7, 5, 2, 1,
             -7, 5, -2, 1,
             -7, 4, -2, 1
-        }), 0x00FFFF00),
+        }), 0x001C4A34),
         //zatylok
         Triangle(std::vector<double>({
             -1, 4, 2, 1,
             -1, 4, -2, 1,
             -1, 9, 2, 1
-        }), 0x00FFFF00),
+        }), 0x001C4A34),
         Triangle(std::vector<double>({
             -1, 9, 2, 1,
             -1, 9, -2, 1,
             -1, 4, -2, 1
-        }), 0x00FFFF00),
+        }), 0x001C4A34),
         //l bok
         Triangle(std::vector<double>({
             -7, 4, 2, 1,
             -4, 4, 2, 1,
             -7, 9, 2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -4, 4, 2, 1,
             -4, 9, 2, 1,
             -7, 9, 2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -4, 8, 2, 1,
             -2, 8, 2, 1,
             -4, 9, 2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -2, 8, 2, 1,
             -2, 9, 2, 1,
             -4, 9, 2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -4, 4, 2, 1,
             -2, 4, 2, 1,
             -4, 6, 2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -2, 4, 2, 1,
             -4, 6, 2, 1,
             -2, 6, 2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -2, 4, 2, 1,
             -2, 9, 2, 1,
             -1, 4, 2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -1, 4, 2, 1,
             -2, 9, 2, 1,
             -1, 9, 2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         //r bok
         Triangle(std::vector<double>({
             -7, 4, -2, 1,
             -4, 4, -2, 1,
             -7, 9, -2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -4, 4, -2, 1,
             -4, 9, -2, 1,
             -7, 9, -2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -4, 8, -2, 1,
             -2, 8, -2, 1,
             -4, 9, -2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -2, 8, -2, 1,
             -2, 9, -2, 1,
             -4, 9, -2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -4, 4, -2, 1,
             -2, 4, -2, 1,
             -4, 6, -2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -2, 4, -2, 1,
             -4, 6, -2, 1,
             -2, 6, -2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -2, 4, -2, 1,
             -2, 9, -2, 1,
             -1, 4, -2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         Triangle(std::vector<double>({
             -1, 4, -2, 1,
             -2, 9, -2, 1,
             -1, 9, -2, 1
-        }), 0x00FFFF00),
+        }), 0x0045BA85),
         //podborodok
         Triangle(std::vector<double>({
             -7, 4, 2, 1,
             -6, 4, 2, 1,
             -7, 4, -2, 1
-        }), 0x00FFFF00),
+        }), 0x000D2727),
         Triangle(std::vector<double>({
             -6, 4, 2, 1,
             -6, 4, -2, 1,
             -7, 4, -2, 1
-        }), 0x00FFFF00),
+        }), 0x000D2727),
         //glaza
         //leviy
         Triangle(std::vector<double>({
             -4, 6, 2, 1,
             -4, 8, 2, 1,
             -2, 8, 2, 1
-        }), 0x001F0F00),
+        }), 0x00524348),
         Triangle(std::vector<double>({
             -4, 6, 2, 1,
             -2, 6, 2, 1,
             -2, 8, 2, 1
-        }), 0x001F0F00),
+        }), 0x00524348),
         //praviy
         Triangle(std::vector<double>({
             -4, 6, -2, 1,
             -4, 8, -2, 1,
             -2, 8, -2, 1
-        }), 0x001F0F00),
+        }), 0x00524348),
         Triangle(std::vector<double>({
             -4, 6, -2, 1,
             -2, 6, -2, 1,
             -2, 8, -2, 1
-        }), 0x001F0F00),
+        }), 0x00524348),
         //sheya
         //pered
         Triangle(std::vector<double>({
             -8, 0, 4, 1,
             -8, 0, -4, 1,
             -6, 4, 2, 1
-        }), 0x00FFFF00),
+        }), 0x0025120B),
         Triangle(std::vector<double>({
             -6, 4, 2, 1,
             -6, 4, -2, 1,
             -8, 0, -4, 1
-        }), 0x00FFFF00),
+        }), 0x0025120B),
         //l bok
         Triangle(std::vector<double>({
             -8, 0, 4, 1,
             -6, 4, 2, 1,
             -1, 4, 2, 1
-        }), 0x00FFFF00),
+        }), 0x005C403C),
         Triangle(std::vector<double>({
             -8, 0, 4, 1,
             -2, 0, 4, 1,
             -1, 4, 2, 1
-        }), 0x00FFFF00),
+        }), 0x005C403C),
         //r bok
         Triangle(std::vector<double>({
             -8, 0, -4, 1,
             -6, 4, -2, 1,
             -1, 4, -2, 1
-        }), 0x00FFFF00),
+        }), 0x005C403C),
         Triangle(std::vector<double>({
             -8, 0, -4, 1,
             -2, 0, -4, 1,
             -1, 4, -2, 1
-        }), 0x00FFFF00),
+        }), 0x005C403C),
         //zad
         Triangle(std::vector<double>({
             -2, 0, 4, 1,
             -2, 0, -4, 1,
             -1, 4, 2, 1
-        }), 0x00FFFF00),
+        }), 0x002F130F),
         Triangle(std::vector<double>({
-            -2, 0, 4, 1,
+            -2, 0, -4, 1,
             -1, 4, 2, 1,
             -1, 4, -2, 1
-        }), 0x00FFFF00),
+        }), 0x002F130F),
         //krylya
         //levoe
         Triangle(std::vector<double>({
             -2, 0, 4, 1,
             6, 0, 4, 1,
-            -2, -6, 7, 1
-        }), 0x00FFFF00),
+            -2, 6, 7, 1
+        }), 0x00612D18),
         //pravoe
         Triangle(std::vector<double>({
             -2, 0, -4, 1,
             6, 0, -4, 1,
-            -2, -6, -7, 1
-        }), 0x00FFFF00),
+            -2, 6, -7, 1
+        }), 0x00612D18),
         //tushka
         //grud
         Triangle(std::vector<double>({
             -5, -8, 4, 1,
             -5, -8, -4, 1,
             -8, 0, 4, 1
-        }), 0x00FFFF00),
+        }), 0x0059241C),
         Triangle(std::vector<double>({
             -8, 0, 4, 1,
             -8, 0, -4, 1,
             -5, -8, -4, 1
-        }), 0x00FFFF00),
+        }), 0x0059241C),
         //l bok
         Triangle(std::vector<double>({
             -5, -8, 4, 1,
             5, -8, 4, 1,
             -8, 0, 4, 1
-        }), 0x00FFFF00),
+        }), 0x00998C83),
         Triangle(std::vector<double>({
             5, -8, 4, 1,
             -8, 0, 4, 1,
             11, 0, 4, 1
-        }), 0x00FFFF00),
+        }), 0x00998C83),
         //r bok
         Triangle(std::vector<double>({
             -5, -8, -4, 1,
             5, -8, -4, 1,
             -8, 0, -4, 1
-        }), 0x00FFFF00),
+        }), 0x00998C83),
         Triangle(std::vector<double>({
             5, -8, -4, 1,
             -8, 0, -4, 1,
             11, 0, -4, 1
-        }), 0x00FFFF00),
+        }), 0x00998C83),
         //spina
         Triangle(std::vector<double>({
             -2, 0, 4, 1,
             -2, 0, -4, 1,
             6, 0, 4, 1
-        }), 0x00FFFF00),
+        }), 0x00423C36),
         Triangle(std::vector<double>({
             6, 0, 4, 1,
             6, 0, -4, 1,
             -2, 0, -4, 1
-        }), 0x00FFFF00),
+        }), 0x00423C36),
         //puzo
         Triangle(std::vector<double>({
             -5, -8, 4, 1,
             -5, -8, -4, 1,
             5, -8, 4, 1
-        }), 0x00FFFF00),
+        }), 0x00D0BEB0),
         Triangle(std::vector<double>({
             5, -8, 4, 1,
             5, -8, -4, 1,
-            -5, -4, -4, 1
-        }), 0x00FFFF00),
+            -5, -8, -4, 1
+        }), 0x00D0BEB0),
         //podhvost
         Triangle(std::vector<double>({
             5, -8, 4, 1,
             5, -8, -4, 1,
             11, 0, 4, 1
-        }), 0x00FFFF00),
+        }), 0x005A524C),
         Triangle(std::vector<double>({
             11, 0, 4, 1,
             11, 0, -4, 1,
             5, -8, -4, 1
-        }), 0x00FFFF00),
+        }), 0x005A524C),
         //hvostik
         //leviy
         Triangle(std::vector<double>({
             6, 0, 4, 1,
             11, 0, 4, 1,
             11, 3, 0, 1
-        }), 0x00FFFF00),
+        }), 0x00FAFFFF),
         //praviy
         Triangle(std::vector<double>({
             6, 0, -4, 1,
             11, 0, -4, 1,
             11, 3, 0, 1
-        }), 0x00FFFF00),
+        }), 0x00FAFFFF),
         //pered
         Triangle(std::vector<double>({
             6, 0, 4, 1,
             6, 0, -4, 1,
             11, 3, 0, 1
-        }), 0x00FFFF00),
+        }), 0x00C1C5C5),
         //zad
         Triangle(std::vector<double>({
             11, 3, 0, 1,
             11, 0, 4, 1,
             11, 0, -4, 1
-        }), 0x00FFFF00),
+        }), 0x00717373),
         //lapki
         //l noga
         Triangle(std::vector<double>({
@@ -465,7 +484,7 @@ Drawer::Drawer()
             -3, -11, -4, 1,
             -3, -11, 0, 1
         }), 0x00FF7F27)
-    });
+    }), 3.0);
 
     this->x_scale = 1;
     this->y_scale = 1;
@@ -693,7 +712,7 @@ void Drawer::rotateZ(double radians) {
 }
 
 void Drawer::restore() {
-    for (int i = 0; i <= triangles.size(); i++) {
+    for (int i = 0; i < triangles.size(); i++) {
         triangles[i].restore();
     }
     this->x_scale = 1;
